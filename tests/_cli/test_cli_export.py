@@ -35,9 +35,11 @@ class TestExportHTML:
         p = subprocess.run(
             ["marimo", "export", "html", temp_marimo_file],
             capture_output=True,
+            text=True,
+            encoding="utf-8"
         )
-        assert p.returncode == 0, p.stderr.decode()
-        html = normalize_index_html(p.stdout.decode())
+        assert p.returncode == 0, p.stderr
+        html = normalize_index_html(p.stdout)
         # Remove folder path
         dirname = path.dirname(temp_marimo_file)
         html = html.replace(dirname, "path")
@@ -54,9 +56,11 @@ class TestExportHTML:
                 "--no-include-code",
             ],
             capture_output=True,
+            text=True,
+            encoding="utf-8"
         )
-        assert p.returncode == 0, p.stderr.decode()
-        html = normalize_index_html(p.stdout.decode())
+        assert p.returncode == 0, p.stderr
+        html = normalize_index_html(p.stdout)
         # Remove folder path
         dirname = path.dirname(temp_marimo_file)
         html = html.replace(dirname, "path")
